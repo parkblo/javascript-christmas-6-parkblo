@@ -1,22 +1,21 @@
 import { Console } from '@woowacourse/mission-utils';
 
-import Person from '../models/Person.js'
+import Restaurant from '../models/Restaurant.js';
 
 import InputView from '../views/InputView.js';
-import OutputView from '../views/OutputView.js'
+import OutputView from '../views/OutputView.js';
 
 class Controller {
-    #person;
-
+    #restaurant;
 
     constructor() {
-        this.#person = new Person();
+        this.#restaurant = new Restaurant();
     }
 
-    async makePersonDate() {
+    async makeUserDate() {
         while (true) {
             try {
-                this.#person.enterDate(await InputView.readDate());
+                this.#restaurant.enterDate(await InputView.readDate());
                 break;
             } catch (error) {
                 Console.print(error.message);
@@ -24,9 +23,21 @@ class Controller {
         }
     }
 
+    async makeUserOrder() {
+        while (true) {
+            try {
+                this.#restaurant.enterOrder(await InputView.readOrder());
+                break;
+            } catch (error) {
+                Console.print(error.message);
+            }
+        }
+    }
+    
     async run() {
         OutputView.printGreeting();
-        
+        await this.makeUserDate();
+        await this.makeUserOrder();
     }
 }
 
