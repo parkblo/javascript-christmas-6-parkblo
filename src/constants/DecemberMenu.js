@@ -26,6 +26,6 @@ const DECEMBER_MENU_CATEGORY = Object.freeze({
     '제로콜라': '음료',
     '레드와인': '음료',
     '샴페인': '음료'
-})
+});
 
 export default { DECEMBER_MENU_PRICE, DECEMBER_MENU_CATEGORY };
