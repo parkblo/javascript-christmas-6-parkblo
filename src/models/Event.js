@@ -1,46 +1,46 @@
-import DECEMBER_MENU_CATEGORY from "../constants/DecemberMenu.js";
+import { DECEMBER_MENU_CATEGORY } from "../constants/DecemberMenu.js";
 
-const Event = {
-    makeDateObjectDay(date) {
+class Event {
+    static makeDateObjectDay(date) {
         const dateObject = new Date('2023-12-' + String(date));
         const day = dateObject.getDay();
 
         return day;
-    },
+    }
 
-    isDday(date) {
+    static isDday(date) {
         if (date > 25) {
             return false;
         }
 
         return true;
-    },
+    }
 
-    isWeekend(date) {
-        const day = this.#makeDateObjectDay(date);
+    static isWeekend(date) {
+        const day = this.makeDateObjectDay(date);
     
         if (day === 5 || day === 6) {
             return true;
         }
 
         return false;
-    },
+    }
 
-    isHoliday(date) {
-        const day = this.#makeDateObjectDay(date);
+    static isHoliday(date) {
+        const day = this.makeDateObjectDay(date);
     
         if (day === 0 || date === 25) {
             return true;
         }
         
         return false;
-    },
+    }
 
-    dday(date) {
+    static dday(date) {
         return (100 * (date - 1) + 1000);
-    },
+    }
 
-    week(order, category) {
+    static week(order, category) {
         let discount = 0;
 
         for (let key in order) {
@@ -50,14 +50,9 @@ const Event = {
         }
 
         return (discount * 2023);
-    },
+    }
 
-    gift(purchaseAmount) {
-        // 샴페인 1개 증정
-        return 25000;
-    },
-
-    badge(purchaseAmount) {
+    static badge(purchaseAmount) {
         if (purchaseAmount >= 20000) {
             return '산타';
         }

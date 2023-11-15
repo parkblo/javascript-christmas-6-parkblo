@@ -1,4 +1,4 @@
-import DECEMBER_MENU_PRICE from '../constants/DecemberMenu.js';
+import { DECEMBER_MENU_PRICE } from '../constants/DecemberMenu.js';
 import Validation from '../utils/Validation.js'
 import Event from './Event.js';
 
