@@ -13,39 +13,41 @@ class Controller {
     }
 
     async makeUserDate() {
-        while (true) {
+        
             try {
-                this.#restaurant.enterDate(await InputView.readDate());
-                break;
+                const inputDate = await InputView.readDate();
+                this.#restaurant.enterDate(inputDate);
+                
             } catch (error) {
                 Console.print(error.message);
             }
-        }
+        
     }
 
     async makeUserOrder() {
-        while (true) {
+        
             try {
-                this.#restaurant.enterOrder(await InputView.readOrder());
-                break;
+                const inputOrder = await InputView.readOrder();
+                this.#restaurant.enterOrder(inputOrder);
+                
             } catch (error) {
                 Console.print(error.message);
             }
-        }
+        
     }
 
     async run() {
         OutputView.printGreeting();
         await this.makeUserDate();
         await this.makeUserOrder();
-        OutputView.printIntroduction();
-        OutputView.printOrder(Restaurant.makeOrderString());
-        OutputView.printTotalOrderAmount(Restaurant.makeTotalOrderAmountString());
-        const eventResult = Restaurant.makeEventResultObject();
+        OutputView.printIntroduction(this.#restaurant.makeDateString());
+        OutputView.printOrder(this.#restaurant.makeOrderString());
+        OutputView.printTotalOrderAmount(this.#restaurant.makeTotalOrderAmountString());
+        const eventResult = this.#restaurant.makeEventResultObject();
         OutputView.printGiftMenu(eventResult['증정메뉴']);
         OutputView.printBenefit(eventResult['혜택내역']);
         OutputView.printTotalBenefitAmount(eventResult['총혜택금액']);
-        OutputView.printEstimatedPaymentAmount(Restaurant.makeEstimatedPaymentAmountString());
+        OutputView.printEstimatedPaymentAmount(this.#restaurant.makeEstimatedPaymentAmountString());
         OutputView.printOwnedEventBadge(eventResult['배지']);
     }
 }

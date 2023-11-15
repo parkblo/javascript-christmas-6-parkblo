@@ -27,22 +27,22 @@ class Restaurant {
     }
 
     #validateItem(inputOrderObj,inputKey) {
-        if (Validation.isValidItem(inputOrderObj,inputKey)) {
+        if (Validation.isWrongItem(inputOrderObj,inputKey)) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
     }
 
     #validateOrder(inputOrder) {
-        if (Validation.isValidOrder(inputOrder)) {
+        if (Validation.isWrongOrder(inputOrder)) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
 
-        if (Validation.isValidOrderObj(this.#makeOrderObject(inputOrder))) {
+        if (Validation.isWrongOrderObj(this.makeOrderObject(inputOrder))) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
     }
     
-    #makeOrderObject(inputOrder) {
+    makeOrderObject(inputOrder) {
         const orderArray = inputOrder.split(",");
         let orderObj = {};
 
@@ -62,7 +62,8 @@ class Restaurant {
 
     enterOrder(inputOrder) {
         this.#validateOrder(inputOrder);
-        this.#order = this.#makeOrderObject(inputOrder);
+        this.#order = this.makeOrderObject(inputOrder);
+        return this.#order;
     }
 
     calculatePurchaseAmount() {
@@ -152,6 +153,10 @@ class Restaurant {
 
         const eventResultReturn = {'총혜택금액': `-${this.#eventResult['totalDiscount'].toLocaleString()}원`, '증정메뉴': this.#eventResult['userGift'], '배지': this.#eventResult['userBadge'], '혜택내역': this.#eventResult['benefitString']};
         return eventResultReturn;
+    }
+
+    makeDateString() {
+        return String(this.#date);
     }
 }
 
