@@ -1,5 +1,5 @@
 import DECEMBER_MENU_PRICE from '../constants/DecemberMenu.js';
-import Validation from '../utils/Validation.js';
+import Validation from '../utils/Validation.js'
 import Event from './Event.js';
 
 class Restaurant {
@@ -7,37 +7,46 @@ class Restaurant {
 
     #order;
 
+    #eventResult
+
     #discount; // 샴페인 증정을 제외한 실제 할인 금액
 
-    constructor () {}
+    constructor () {
+        this.#eventResult = {
+            'totalDiscount' : 0,
+            'userGift' : '',
+            'userBadge' : '',
+            'benefitString' : ''
+        };
+    }
 
     #validateDate(inputDate) {
-        if (Validation.date(inputDate)) {
+        if (Validation.isWrongDate(inputDate)) {
             throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
         }
     }
 
     #validateItem(inputOrderObj,inputKey) {
-        if (Validation.item(inputOrderObj,inputKey)) {
+        if (Validation.isValidItem(inputOrderObj,inputKey)) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
     }
 
     #validateOrder(inputOrder) {
-        if (Validation.order(inputOrder)) {
+        if (Validation.isValidOrder(inputOrder)) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
 
-        if (Validation.orderObj(this.#makeOrderObject(inputOrder))) {
+        if (Validation.isValidOrderObj(this.#makeOrderObject(inputOrder))) {
             throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
         }
     }
     
     #makeOrderObject(inputOrder) {
-        const order = inputOrder.split(",");
+        const orderArray = inputOrder.split(",");
         let orderObj = {};
 
-        order.forEach(item => {
+        orderArray.forEach(item => {
             let [key, value] = item.split("-");
             this.#validateItem(orderObj, key);
             orderObj[key] = Number(value);
@@ -68,54 +77,54 @@ class Restaurant {
         return result;
     }
 
-    #enterDiscount(inputDiscount,userGift) {
-        this.#discount = inputDiscount;
-        if (userGift === '샴페인 1개') {
+    #enterDiscount() {
+        this.#discount = this.#eventResult['totalDiscount'];
+        if (this.#eventResult['userGift'] === '샴페인 1개') {
             this.#discount -= DECEMBER_MENU_PRICE['샴페인'];
         }
     }
 
-    #ddayEvent(totalDiscount,benefitString) {
+    #ddayEvent() {
         if (Event.isDday(this.#date)) {
             const discount = Event.dday(this.#date);
-            totalDiscount += discount;
-            benefitString += `크리스마스 디데이 할인: -${discount.toLocaleString()}원\n`;
+            this.#eventResult['totalDiscount'] += discount;
+            this.#eventResult['benefitString'] += `크리스마스 디데이 할인: -${discount.toLocaleString()}원\n`;
         }
     }
 
-    #weekEvent(totalDiscount, benefitString) {
+    #weekEvent() {
         if (!Event.isWeekend(this.#date)) {
-            const discount = Event.week(order,'디저트');
-            totalDiscount += discount;
-            benefitString += `평일 할인: -${discount.toLocaleString()}원\n`;
+            const discount = Event.week(this.#order,'디저트');
+            this.#eventResult['totalDiscount'] += discount;
+            this.#eventResult['benefitString'] += `평일 할인: -${discount.toLocaleString()}원\n`;
         }
         
         if (Event.isWeekend(this.#date)) {
-            const discount = Event.week(order,'메인');
-            totalDiscount += discount;
-            benefitString += `주말 할인: -${discount.toLocaleString()}원\n`;
+            const discount = Event.week(this.#order,'메인');
+            this.#eventResult['totalDiscount'] += discount;
+            this.#eventResult['benefitString'] += `주말 할인: -${discount.toLocaleString()}원\n`;
         }
     }
 
-    #holidayEvent(totalDiscount, benefitString) {
+    #holidayEvent() {
         if (Event.isHoliday(this.#date)) {
             const discount = 1000;
-            totalDiscount += discount;
-            benefitString += `특별 할인: -${discount.toLocaleString()}원\n`;
+            this.#eventResult['totalDiscount'] += discount;
+            this.#eventResult['benefitString'] += `특별 할인: -${discount.toLocaleString()}원\n`;
         }
     }
 
-    #giftEvent(totalDiscount,benefitString,userGift) {
+    #giftEvent() {
         if (this.calculatePurchaseAmount() >= 12000) {
             const discount = DECEMBER_MENU_PRICE['샴페인'];
-            totalDiscount += discount;
-            benefitString += `증정 이벤트: -${discount.toLocaleString()}원\n`;
-            userGift += '샴페인 1개';
+            this.#eventResult['totalDiscount'] += discount;
+            this.#eventResult['benefitString'] += `증정 이벤트: -${discount.toLocaleString()}원\n`;
+            this.#eventResult['userGift'] += '샴페인 1개';
         }
     }
 
-    #badgeEvent(userBadge) {
-        userBadge += Event.badge(this.calculatePurchaseAmount());
+    #badgeEvent() {
+        this.#eventResult['userBadge'] += Event.badge(this.calculatePurchaseAmount());
     }
 
     makeOrderString() {
@@ -133,20 +142,16 @@ class Restaurant {
     }
 
     makeEventResultObject() {
-        let totalDiscount = 0;
-        let userGift = '';
-        let userBadge = '';
-        let benefitString = '';
+        this.#ddayEvent();
+        this.#weekEvent();
+        this.#holidayEvent();
+        this.#giftEvent()
+        this.#badgeEvent();
 
-        this.#ddayEvent(totalDiscount,benefitString);
-        this.#weekEvent(totalDiscount,benefitString);
-        this.#holidayEvent(totalDiscount,benefitString);
-        this.#giftEvent(totalDiscount,benefitString,userGift)
-        this.#badgeEvent(userBadge);
+        this.#enterDiscount();
 
-        this.#enterDiscount(totalDiscount,userGift);
-
-        return ({'총혜택금액': `-${totalDiscount.toLocaleString()}원`, '증정메뉴': userGift, '배지': userBadge, '혜택내역': benefitString});
+        const eventResultReturn = {'총혜택금액': `-${this.#eventResult['totalDiscount'].toLocaleString()}원`, '증정메뉴': this.#eventResult['userGift'], '배지': this.#eventResult['userBadge'], '혜택내역': this.#eventResult['benefitString']};
+        return eventResultReturn;
     }
 }
 
