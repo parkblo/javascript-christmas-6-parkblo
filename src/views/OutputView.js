@@ -40,9 +40,10 @@ const OutputView = {
         Console.print('');
     },
 
-    printEstimatedPaymentAmount() {
+    printEstimatedPaymentAmount(string) {
         Console.print("<할인 후 예상 결제 금액>");
-
+        Console.print(string);
+        Console.print('');
     },
 
     printOwnedEventBadge() {

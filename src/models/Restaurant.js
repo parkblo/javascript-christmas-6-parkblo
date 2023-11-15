@@ -125,7 +125,11 @@ class Restaurant {
     }
 
     makeTotalOrderAmountString() {
-        return (`${this.calculatePurchaseAmount.toLocaleString()}원`);
+        return (`${this.calculatePurchaseAmount().toLocaleString()}원`);
+    }
+
+    makeEstimatedPaymentAmountString() {
+        return (`${(this.calculatePurchaseAmount() - this.#discount).toLocaleString()}원`)
     }
 
     makeEventResultObject() {
