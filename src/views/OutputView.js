@@ -16,9 +16,10 @@ const OutputView = {
         Console.print('');
     },
 
-    printTotalOrderAmount(purchaseAmount) {
+    printTotalOrderAmount(string) {
         Console.print("<할인 전 총주문 금액>");
-
+        Console.print(string);
+        Console.print('');
     },
 
     printGiftMenu() {

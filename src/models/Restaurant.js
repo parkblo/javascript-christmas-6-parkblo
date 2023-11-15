@@ -124,6 +124,10 @@ class Restaurant {
         .join('\n'));
     }
 
+    makeTotalOrderAmountString() {
+        return (`${this.calculatePurchaseAmount.toLocaleString()}원`);
+    }
+
     runEvent() {
         let totalDiscount = 0;
         let userGift = '';

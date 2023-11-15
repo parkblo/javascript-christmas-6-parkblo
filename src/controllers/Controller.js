@@ -39,7 +39,8 @@ class Controller {
         await this.makeUserDate();
         await this.makeUserOrder();
         OutputView.printIntroduction();
-        OutputView.printTotalOrderAmount(Restaurant.calculatePurchaseAmount())
+        OutputView.printOrder(Restaurant.makeOrderString());
+        OutputView.printTotalOrderAmount(Restaurant.makeTotalOrderAmountString());
         
         const eventResult = Restaurant.runEvent();
     }
