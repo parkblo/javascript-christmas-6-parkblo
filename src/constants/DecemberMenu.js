@@ -28,4 +28,4 @@ const DECEMBER_MENU_CATEGORY = Object.freeze({
     '샴페인': '음료'
 });
 
-export default { DECEMBER_MENU_PRICE, DECEMBER_MENU_CATEGORY };
+export { DECEMBER_MENU_PRICE, DECEMBER_MENU_CATEGORY };
