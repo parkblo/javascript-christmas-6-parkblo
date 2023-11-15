@@ -46,6 +46,7 @@ class Controller {
         OutputView.printBenefit(eventResult['혜택내역']);
         OutputView.printTotalBenefitAmount(eventResult['총혜택금액']);
         OutputView.printEstimatedPaymentAmount(Restaurant.makeEstimatedPaymentAmountString());
+        OutputView.printOwnedEventBadge(eventResult['배지']);
     }
 }
 

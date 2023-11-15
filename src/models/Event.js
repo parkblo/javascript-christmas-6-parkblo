@@ -59,13 +59,13 @@ const Event = {
 
     badge(purchaseAmount) {
         if (purchaseAmount >= 20000) {
-            return 'santa';
+            return '산타';
         }
         else if (purchaseAmount >= 10000) {
-            return 'tree';
+            return '트리';
         }
         else if (purchaseAmount >= 5000) {
-            return 'star';
+            return '별';
         }
         return '';
     }
