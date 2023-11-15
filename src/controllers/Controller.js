@@ -44,6 +44,7 @@ class Controller {
         const eventResult = Restaurant.makeEventResultObject();
         OutputView.printGiftMenu(eventResult['증정메뉴']);
         OutputView.printBenefit(eventResult['혜택내역']);
+        OutputView.printTotalBenefitAmount(eventResult['총혜택금액']);
     }
 }
 

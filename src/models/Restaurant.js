@@ -142,7 +142,7 @@ class Restaurant {
 
         this.#enterDiscount(totalDiscount,userGift);
 
-        return ({'총혜택금액': totalDiscount, '증정메뉴': userGift, '배지': userBadge, '혜택내역': benefitString});
+        return ({'총혜택금액': `-${totalDiscount.toLocaleString()}원`, '증정메뉴': userGift, '배지': userBadge, '혜택내역': benefitString});
     }
 }
 

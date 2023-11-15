@@ -34,9 +34,10 @@ const OutputView = {
         Console.print('');
     },
 
-    printTotalBenefitAmount() {
+    printTotalBenefitAmount(string) {
         Console.print("<총혜택 금액>");
-
+        Console.print(string);
+        Console.print('');
     },
 
     printEstimatedPaymentAmount() {
