@@ -41,8 +41,8 @@ class Controller {
         OutputView.printIntroduction();
         OutputView.printOrder(Restaurant.makeOrderString());
         OutputView.printTotalOrderAmount(Restaurant.makeTotalOrderAmountString());
-        
-        const eventResult = Restaurant.runEvent();
+        const eventResult = Restaurant.makeEventResultObject();
+        OutputView.printGiftMenu(eventResult['증정메뉴']);
     }
 }
 

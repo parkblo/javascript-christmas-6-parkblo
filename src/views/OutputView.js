@@ -22,9 +22,10 @@ const OutputView = {
         Console.print('');
     },
 
-    printGiftMenu() {
+    printGiftMenu(string) {
         Console.print("<증정 메뉴>");
-    
+        Console.print(string);
+        Console.print('');
     },
     
     printBenefit() {

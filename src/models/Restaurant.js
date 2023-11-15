@@ -128,7 +128,7 @@ class Restaurant {
         return (`${this.calculatePurchaseAmount.toLocaleString()}원`);
     }
 
-    runEvent() {
+    makeEventResultObject() {
         let totalDiscount = 0;
         let userGift = '';
         let userBadge = '';
@@ -142,7 +142,7 @@ class Restaurant {
 
         this.#enterDiscount(totalDiscount,userGift);
 
-        return ([totalDiscount, userGift, userBadge, benefitString]);
+        return ({'총혜택금액': totalDiscount, '증정메뉴': userGift, '배지': userBadge, '혜택내역': benefitString});
     }
 }
 
