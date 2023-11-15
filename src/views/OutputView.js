@@ -5,8 +5,8 @@ const OutputView = {
         Console.print("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     },
 
-    printIntroduction() {
-        Console.print("12월 x일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    printIntroduction(string) {
+        Console.print(`12월 ${string}일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!`);
 
     },
 
