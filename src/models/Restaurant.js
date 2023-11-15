@@ -1,4 +1,5 @@
-import Validation from '../utils/Validation.js'
+import DECEMBER_MENU_PRICE from '../constants/DecemberMenu.js';
+import Validation from '../utils/Validation.js';
 
 class Restaurant {
     #date;
@@ -50,6 +51,18 @@ class Restaurant {
     enterOrder(inputOrder) {
         this.#validateOrder(inputOrder);
         this.#order = this.#makeOrderObject(inputOrder);
+    }
+
+    calculatePurchaseAmount() {
+        let result = 0;
+
+        for (let key in this.#order) {
+            if (key in DECEMBER_MENU_PRICE) {
+                result += this.#order[key] * DECEMBER_MENU_PRICE[key];
+            }
+        }
+
+        return result;
     }
 }
 
