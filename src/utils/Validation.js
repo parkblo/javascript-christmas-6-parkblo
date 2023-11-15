@@ -21,7 +21,7 @@ class Validation {
         return (string in object);
     }
 
-    checkOnlyDrinkOrder(object) {
+    static checkOnlyDrinkOrder(object) {
         let uniqueCategory = [];
 
         for (let key in object) {
@@ -36,7 +36,7 @@ class Validation {
 
     static isWrongOrderObj(object) {
         return (
-            !Object.keys(object).every(key => DECEMBER_MENU_PRICE.includes(key)) ||
+            !Object.keys(object).every(key => key in DECEMBER_MENU_PRICE) ||
             Object.values(object).some(value => value < 1) ||
             this.checkOnlyDrinkOrder(object) ||
             (Object.values(object).reduce((acc, curr) => acc + curr, 0) > 20)
