@@ -96,14 +96,18 @@ class Restaurant {
     #weekEvent() {
         if (!Event.isWeekend(this.#date)) {
             const discount = Event.week(this.#order,'디저트');
-            this.#eventResult['totalDiscount'] += discount;
-            this.#eventResult['benefitString'] += `평일 할인: -${discount.toLocaleString()}원\n`;
+            if (discount != 0) {
+                this.#eventResult['totalDiscount'] += discount;
+                this.#eventResult['benefitString'] += `평일 할인: -${discount.toLocaleString()}원\n`;
+            }
         }
         
         if (Event.isWeekend(this.#date)) {
             const discount = Event.week(this.#order,'메인');
-            this.#eventResult['totalDiscount'] += discount;
-            this.#eventResult['benefitString'] += `주말 할인: -${discount.toLocaleString()}원\n`;
+            if (discount != 0) {
+                this.#eventResult['totalDiscount'] += discount;
+                this.#eventResult['benefitString'] += `주말 할인: -${discount.toLocaleString()}원\n`;
+            }
         }
     }
 
@@ -142,6 +146,24 @@ class Restaurant {
         return (`${(this.calculatePurchaseAmount() - this.#discount).toLocaleString()}원`)
     }
 
+    #makeEventResultReturn() {
+        let eventResultReturn = {};
+
+        for (let key in this.#eventResult) {
+            if (this.#eventResult[key] === '' || this.#eventResult[key] === 0) {
+                this.#eventResult[key] = '없음';
+            }
+        }
+
+        eventResultReturn = {'총혜택금액': `-${this.#eventResult['totalDiscount'].toLocaleString()}원`, '증정메뉴': this.#eventResult['userGift'], '배지': this.#eventResult['userBadge'], '혜택내역': this.#eventResult['benefitString']};
+
+        if (this.#eventResult['totalDiscount'] === '없음') {
+            eventResultReturn['총혜택금액'] = '없음'
+        }
+
+        return eventResultReturn;
+    }
+
     makeEventResultObject() {
         this.#ddayEvent();
         this.#weekEvent();
@@ -150,9 +172,7 @@ class Restaurant {
         this.#badgeEvent();
 
         this.#enterDiscount();
-
-        const eventResultReturn = {'총혜택금액': `-${this.#eventResult['totalDiscount'].toLocaleString()}원`, '증정메뉴': this.#eventResult['userGift'], '배지': this.#eventResult['userBadge'], '혜택내역': this.#eventResult['benefitString']};
-        return eventResultReturn;
+        return this.#makeEventResultReturn();
     }
 
     makeDateString() {
