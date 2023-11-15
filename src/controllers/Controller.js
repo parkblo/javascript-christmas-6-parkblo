@@ -33,11 +33,15 @@ class Controller {
             }
         }
     }
-    
+
     async run() {
         OutputView.printGreeting();
         await this.makeUserDate();
         await this.makeUserOrder();
+        OutputView.printIntroduction();
+        OutputView.printTotalOrderAmount(Restaurant.calculatePurchaseAmount())
+        
+        const eventResult = Restaurant.runEvent();
     }
 }
 
