@@ -13,27 +13,27 @@ class Controller {
     }
 
     async makeUserDate() {
-        
+        while (true) {
             try {
                 const inputDate = await InputView.readDate();
                 this.#restaurant.enterDate(inputDate);
-                
+                break;
             } catch (error) {
                 Console.print(error.message);
             }
-        
+        }
     }
 
     async makeUserOrder() {
-        
+        while (true) {
             try {
                 const inputOrder = await InputView.readOrder();
                 this.#restaurant.enterOrder(inputOrder);
-                
+                break;
             } catch (error) {
                 Console.print(error.message);
             }
-        
+        }
     }
 
     async run() {
