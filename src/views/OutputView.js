@@ -28,9 +28,10 @@ const OutputView = {
         Console.print('');
     },
     
-    printBenefit() {
+    printBenefit(string) {
         Console.print("<혜택 내역>");
-
+        Console.print(string);
+        Console.print('');
     },
 
     printTotalBenefitAmount() {

@@ -43,6 +43,7 @@ class Controller {
         OutputView.printTotalOrderAmount(Restaurant.makeTotalOrderAmountString());
         const eventResult = Restaurant.makeEventResultObject();
         OutputView.printGiftMenu(eventResult['증정메뉴']);
+        OutputView.printBenefit(eventResult['혜택내역']);
     }
 }
 
