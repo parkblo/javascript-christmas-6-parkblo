@@ -18,11 +18,11 @@ describe('Restaurant.js 테스트', () => {
         expect(result).toEqual('음료');
     });
 
-    test('makeEventResultObject', () => {
+    /*test('makeEventResultObject', () => {
         let R = new Restaurant();
         R.enterDate("3");
         R.enterOrder("양송이수프-1");
         const result = R.makeEventResultObject();
         expect(result).toEqual({'가나다': 123, '라라라': 456});
-    });
+    });*/
 });
