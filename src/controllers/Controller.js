@@ -13,6 +13,7 @@ class Controller {
   }
 
   async makeUserDate() {
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
         const inputDate = await InputView.readDate();
@@ -25,6 +26,7 @@ class Controller {
   }
 
   async makeUserOrder() {
+    // eslint-disable-next-line no-constant-condition
     while (true) {
       try {
         const inputOrder = await InputView.readOrder();
