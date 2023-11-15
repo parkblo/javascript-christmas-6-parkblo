@@ -118,6 +118,12 @@ class Restaurant {
         userBadge += Event.badge(this.calculatePurchaseAmount());
     }
 
+    makeOrderString() {
+        return (Object.entries(this.#order)
+        .map(([key, value]) => `${key} ${value}개`)
+        .join('\n'));
+    }
+
     runEvent() {
         let totalDiscount = 0;
         let userGift = '';
